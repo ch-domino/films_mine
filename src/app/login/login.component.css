@@ -1,0 +1,11 @@
+.login-card {
+  max-width: 400px;
+  margin: 100px auto;
+}
+.login_card mat-form-field {
+  display: block;
+}
+.login_card mat-card-actions,
+mat-card-header {
+  margin: 0 auto;
+}
