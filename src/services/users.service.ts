@@ -3,6 +3,7 @@ import { User } from '../entities/user';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,10 @@ export class UsersService {
   ];
   private token = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
   getUsersSynchronous(): User[] {
     return this.users;
