@@ -14,7 +14,6 @@ export class UsersService {
     new User('Peter Service', 'peter@upjs.sk', 2, new Date(), 'qwerty'),
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
-    { name: 'Brian Service', email: 'brian@upjs.com', password: '' },
   ];
   private token = '';
 

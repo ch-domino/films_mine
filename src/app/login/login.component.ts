@@ -25,7 +25,7 @@ export class LoginComponent {
   submit() {
     this.usersService.login(this.auth).subscribe((success) => {
       if (success) {
-        this.router.navigateByUrl('/users');
+        this.router.navigateByUrl('/extended-users');
         console.log('success: ', success);
       }
     });
