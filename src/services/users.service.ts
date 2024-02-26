@@ -38,9 +38,12 @@ export class UsersService {
   }
 
   getExtendedUsers(): Observable<User[]> {
-    return this.http
-      .get<User[]>(this.url + 'users/' + this.token)
-      .pipe(catchError((err) => this.processError(err)));
+    return this.http.get<User[]>(this.url + 'users/' + this.token).pipe(
+      map((jsonGroups) =>
+        jsonGroups.map((jsonGroups) => User.clone(jsonGroups))
+      ),
+      catchError((err) => this.processError(err))
+    );
   }
 
   login(auth: Auth): Observable<boolean> {
