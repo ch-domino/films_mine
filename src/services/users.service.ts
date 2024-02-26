@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
-import { Observable, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 
@@ -42,6 +42,9 @@ export class UsersService {
         map((token) => {
           this.token = token;
           return true;
+        }),
+        catchError((err) => {
+          return of(false);
         })
       );
   }
