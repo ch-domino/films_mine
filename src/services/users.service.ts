@@ -45,6 +45,7 @@ export class UsersService {
       .pipe(
         map((token) => {
           this.token = token;
+          this.messageService.success('Login successful');
           return true;
         }),
         catchError((err) => {
