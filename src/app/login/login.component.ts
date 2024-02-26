@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Auth } from '../../entities/auth';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
@@ -23,6 +24,7 @@ import { UsersService } from '../../services/users.service';
     MatInputModule,
     MatIconModule,
     FormsModule,
+    MatSnackBarModule,
   ],
 })
 export class LoginComponent {
