@@ -38,9 +38,6 @@ export class LoginComponent {
     this.usersService.login(this.auth).subscribe((success) => {
       if (success) {
         console.log('success: ', success);
-        this.snackBar.open('Login successful', 'close', {
-          duration: 2000,
-        });
       } else {
         console.log('success: ', success);
         this.snackBar.open('Wrong name or password!', 'close', {
