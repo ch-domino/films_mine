@@ -38,6 +38,12 @@ export class UsersService {
     );
   }
 
+  getExtendedUsers(): Observable<User[]> {
+    return this.http
+      .get<User[]>(this.url + 'users/' + this.token)
+      .pipe(catchError((err) => this.processError(err)));
+  }
+
   login(auth: Auth): Observable<boolean> {
     return this.http
       .post(this.url + 'login', auth, { responseType: 'text' })
