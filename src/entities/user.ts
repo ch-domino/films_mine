@@ -7,21 +7,21 @@ export class User {
       user.email,
       user.id,
       user.lastLogin ? new Date(user.lastLogin) : undefined,
-      user.password,
-      user.active
+      user.password
     );
   }
+
   constructor(
     public name: string,
     public email: string,
     public id?: number,
     public lastLogin?: Date,
     public password = '',
-    public active?: boolean
-  ) // public groups: Group[] = []
-  {}
+    public active?: boolean,
+    public groups: Group[] = []
+  ) {}
 
   toString() {
-    return this.id + ', ' + this.name + ', ' + this.email;
+    return this.id + ': ' + this.name + ', ' + this.email;
   }
 }
