@@ -43,7 +43,7 @@ export class LoginComponent {
         });
       } else {
         console.log('success: ', success);
-        this.snackBar.open('Login failed', 'close', {
+        this.snackBar.open('Wrong name or password!', 'close', {
           duration: 2000,
         });
       }
