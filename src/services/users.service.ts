@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
 import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Auth } from '../entities/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class UsersService {
       .pipe(
         map((jsonUsers) => jsonUsers.map((jsonUser) => User.clone(jsonUser)))
       );
+  }
+
+  login(auth: Auth): Observable<string> {
+    return this.http.post(this.url + 'login', auth, { responseType: 'text' });
   }
 }
