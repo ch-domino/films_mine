@@ -8,6 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Auth } from '../../entities/auth';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 /**
  * @title Card with multiple sections
@@ -33,10 +34,12 @@ export class LoginComponent {
 
   usersService = inject(UsersService);
   snackBar = inject(MatSnackBar);
+  router = inject(Router);
 
   submit() {
     this.usersService.login(this.auth).subscribe((success) => {
       if (success) {
+        this.router.navigateByUrl('/users');
         console.log('success: ', success);
       } else {
         console.log('success: ', success);
