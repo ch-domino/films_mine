@@ -32,7 +32,9 @@ export class LoginComponent {
   usersService = inject(UsersService);
 
   submit() {
-    this.usersService.login(this.auth);
+    this.usersService.login(this.auth).subscribe((token) => {
+      console.log('token: ', token);
+    });
   }
 
   getAuth(): string {
