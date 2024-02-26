@@ -27,7 +27,7 @@ import { UsersService } from '../../services/users.service';
 })
 export class LoginComponent {
   hide = true;
-  auth = new Auth('name', 'password');
+  auth = new Auth('Peter', 'sovy'); // Don't forget to remove when adding to server
 
   usersService = inject(UsersService);
 
