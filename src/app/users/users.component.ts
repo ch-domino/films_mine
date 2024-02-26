@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   ];
   selectedUser?: User;
   errorMessage = '';
-  columnsToDisplay = ['id', 'name', 'email', 'password', 'lastLogin'];
+  columnsToDisplay = ['id', 'name', 'email'];
 
   constructor(private usersService: UsersService) {}
 
