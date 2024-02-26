@@ -1,9 +1,10 @@
 <form (ngSubmit)="submit()">
   <mat-card class="login_card">
-    <mat-card-header> </mat-card-header>
+    <mat-card-header>
+      <mat-card-title>Log in to see your dashboard</mat-card-title>
+    </mat-card-header>
 
     <mat-card-content>
-      <p>Log in to see your dashboard</p>
       {{ getAuth() }}
 
       <mat-form-field>
