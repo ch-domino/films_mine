@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { EMPTY, Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
@@ -56,5 +56,25 @@ export class UsersService {
           return throwError(() => err);
         })
       );
+  }
+
+  processError(err: any) {
+    if (err instanceof HttpErrorResponse) {
+      if (err.status === 0) {
+        this.messageService.error('Server is not available');
+        return EMPTY;
+      }
+      if (err.status >= 400 && err.status < 500) {
+        const message =
+          err.error.errorMessage || JSON.parse(err.error).errorMessage;
+        this.messageService.error(message);
+        return EMPTY;
+      }
+      this.messageService.error('Server error, contact server administrator');
+      console.error('Server error', err);
+      return EMPTY;
+    }
+    console.error('Error', err);
+    return EMPTY;
   }
 }
