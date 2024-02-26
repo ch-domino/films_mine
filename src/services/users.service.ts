@@ -50,6 +50,7 @@ export class UsersService {
         }),
         catchError((err) => {
           if (err instanceof HttpErrorResponse && err.status === 401) {
+            this.messageService.error('Wrong name or password');
             return of(false);
           }
           return throwError(() => err);
