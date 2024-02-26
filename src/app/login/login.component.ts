@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Auth } from '../../entities/auth';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../modules/material.module';
 
 /**
@@ -12,7 +13,7 @@ import { MaterialModule } from '../../modules/material.module';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, FormsModule],
 })
 export class LoginComponent {
   hide = true;
