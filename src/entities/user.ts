@@ -7,7 +7,8 @@ export class User {
       user.email,
       user.id,
       user.lastLogin ? new Date(user.lastLogin) : undefined,
-      user.password
+      user.password,
+      user.active
     );
   }
   constructor(
@@ -16,9 +17,9 @@ export class User {
     public id?: number,
     public lastLogin?: Date,
     public password = '',
-    public active?: boolean,
-    public groups: Group[] = []
-  ) {}
+    public active?: boolean
+  ) // public groups: Group[] = []
+  {}
 
   toString() {
     return this.id + ', ' + this.name + ', ' + this.email;
