@@ -32,11 +32,10 @@ export class UsersService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http
-      .get<User[]>(this.url + 'users')
-      .pipe(
-        map((jsonUsers) => jsonUsers.map((jsonUser) => User.clone(jsonUser)))
-      );
+    return this.http.get<User[]>(this.url + 'users').pipe(
+      map((jsonUsers) => jsonUsers.map((jsonUser) => User.clone(jsonUser))),
+      catchError((err) => this.processError(err))
+    );
   }
 
   login(auth: Auth): Observable<boolean> {
@@ -48,13 +47,7 @@ export class UsersService {
           this.messageService.success('Login successful');
           return true;
         }),
-        catchError((err) => {
-          if (err instanceof HttpErrorResponse && err.status === 401) {
-            this.messageService.error('Wrong name or password');
-            return of(false);
-          }
-          return throwError(() => err);
-        })
+        catchError((err) => this.processError(err))
       );
   }
 
