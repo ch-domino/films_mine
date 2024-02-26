@@ -15,6 +15,8 @@ export class UsersService {
     new User('Stewie Service', 'stewie@upjs.sk', 1),
     { name: 'Brian Service', email: 'brian@upjs.com', password: '' },
   ];
+  private token = '';
+
   constructor(private http: HttpClient) {}
 
   getUsersSynchronous(): User[] {
@@ -33,7 +35,14 @@ export class UsersService {
       );
   }
 
-  login(auth: Auth): Observable<string> {
-    return this.http.post(this.url + 'login', auth, { responseType: 'text' });
+  login(auth: Auth): Observable<boolean> {
+    return this.http
+      .post(this.url + 'login', auth, { responseType: 'text' })
+      .pipe(
+        map((token) => {
+          this.token = token;
+          return true;
+        })
+      );
   }
 }
