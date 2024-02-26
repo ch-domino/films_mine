@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
-import { Observable, catchError, map, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 
 @Injectable({
@@ -44,7 +44,10 @@ export class UsersService {
           return true;
         }),
         catchError((err) => {
-          return of(false);
+          if (err instanceof HttpErrorResponse && err.status === 401) {
+            return of(false);
+          }
+          return throwError(() => err);
         })
       );
   }
