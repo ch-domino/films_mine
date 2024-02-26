@@ -4,7 +4,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Auth } from '../../entities/auth';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
@@ -25,7 +24,6 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatIconModule,
     FormsModule,
-    MatSnackBarModule,
   ],
 })
 export class LoginComponent {
@@ -33,7 +31,6 @@ export class LoginComponent {
   auth = new Auth('Peter', 'sovy'); // Don't forget to remove when adding to server
 
   usersService = inject(UsersService);
-  snackBar = inject(MatSnackBar);
   router = inject(Router);
 
   submit() {
@@ -41,11 +38,6 @@ export class LoginComponent {
       if (success) {
         this.router.navigateByUrl('/users');
         console.log('success: ', success);
-      } else {
-        console.log('success: ', success);
-        this.snackBar.open('Wrong name or password!', 'close', {
-          duration: 2000,
-        });
       }
     });
   }
