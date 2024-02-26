@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../entities/user';
 import { UsersService } from '../../services/users.service';
-import { MatTableModule } from '@angular/material/table';
+import { MaterialModule } from '../../modules/material.module';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MaterialModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   ];
   selectedUser?: User;
   errorMessage = '';
-  columnsToDisplay = ['id', 'name', 'email', 'password', 'lastLogin'];
+  columnsToDisplay = ['id', 'name', 'email'];
 
   constructor(private usersService: UsersService) {}
 

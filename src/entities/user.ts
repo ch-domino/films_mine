@@ -1,3 +1,5 @@
+import { Group } from './group';
+
 export class User {
   static clone(user: User): User {
     return new User(
@@ -13,7 +15,9 @@ export class User {
     public email: string,
     public id?: number,
     public lastLogin?: Date,
-    public password = ''
+    public password = '',
+    public active?: boolean,
+    public groups: Group[] = []
   ) {}
 
   toString() {
