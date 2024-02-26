@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Auth } from '../../entities/auth';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
@@ -32,10 +32,21 @@ export class LoginComponent {
   auth = new Auth('Peter', 'sovy'); // Don't forget to remove when adding to server
 
   usersService = inject(UsersService);
+  snackBar = inject(MatSnackBar);
 
   submit() {
-    this.usersService.login(this.auth).subscribe((token) => {
-      console.log('token: ', token);
+    this.usersService.login(this.auth).subscribe((success) => {
+      if (success) {
+        console.log('success: ', success);
+        this.snackBar.open('Login successful', 'close', {
+          duration: 2000,
+        });
+      } else {
+        console.log('success: ', success);
+        this.snackBar.open('Login failed', 'close', {
+          duration: 2000,
+        });
+      }
     });
   }
 
