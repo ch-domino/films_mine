@@ -7,7 +7,9 @@ export class User {
       user.email,
       user.id,
       user.lastLogin ? new Date(user.lastLogin) : undefined,
-      user.password
+      user.password || '',
+      user.active,
+      user.groups?.map((group) => Group.clone(group)) || []
     );
   }
 
@@ -22,6 +24,14 @@ export class User {
   ) {}
 
   toString() {
-    return this.id + ': ' + this.name + ', ' + this.email;
+    return (
+      this.id +
+      ': ' +
+      this.name +
+      ', ' +
+      this.email +
+      ', groups: ' +
+      this.groups.map((g) => g.name).join(', ')
+    );
   }
 }
