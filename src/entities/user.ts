@@ -9,7 +9,7 @@ export class User {
       user.lastLogin ? new Date(user.lastLogin) : undefined,
       user.password || '',
       user.active,
-      user.groups.map((group) => Group.clone(group))
+      user.groups?.map((group) => Group.clone(group)) || []
     );
   }
 
