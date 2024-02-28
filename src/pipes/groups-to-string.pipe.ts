@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Group } from '../entities/group';
 
 @Pipe({
   name: 'groupsToString',
-  standalone: true
+  standalone: true,
 })
 export class GroupsToStringPipe implements PipeTransform {
-
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(groups: Group[], ...args: unknown[]): string {
+    return groups.map((group) => group.name).join(', ');
   }
-
 }
