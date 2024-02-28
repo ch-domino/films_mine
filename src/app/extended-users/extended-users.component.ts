@@ -13,6 +13,7 @@ import { MaterialModule } from '../../modules/material.module';
 export class ExtendedUsersComponent implements OnInit {
   usersService = inject(UsersService);
   users: User[] = [];
+  columnsToDisplay = ['id', 'name', 'email', 'lastLogin', 'active', 'groups'];
 
   ngOnInit(): void {
     this.usersService.getExtendedUsers().subscribe((users) => {
