@@ -21,8 +21,4 @@ export class ExtendedUsersComponent implements OnInit {
       this.users = users;
     });
   }
-
-  joinGroups(groups: []): string {
-    return groups.join(', ');
-  }
 }
