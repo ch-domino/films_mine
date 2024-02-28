@@ -13,4 +13,8 @@ import { UsersService } from '../../services/users.service';
 export class NavbarComponent {
   usersService = inject(UsersService);
   userNameSignal = this.usersService.loggedUserSignal;
+
+  logout() {
+    this.usersService.logout();
+  }
 }
