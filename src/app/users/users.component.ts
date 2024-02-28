@@ -16,6 +16,7 @@ export class UsersComponent implements OnInit {
     new User('Peter', 'peter@upjs.sk', 2, new Date(), 'qwerty'),
     new User('Lois', 'lois@upjs.sk', 3),
     new User('Stewie', 'stewie@upjs.sk', 1),
+    { name: 'Brian', email: 'brian@upjs.sk', id: 4, password: '', groups: [] },
   ];
   selectedUser?: User;
   errorMessage = '';
