@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { User } from '../entities/user';
 import { EMPTY, Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -15,7 +15,34 @@ export class UsersService {
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
-  private token = '';
+
+  loggedUserSignal = signal(this.userName);
+
+  // private token = '';
+  private get token(): string {
+    return localStorage.getItem('filmsToken') || '';
+  }
+
+  private set token(value: string) {
+    if (value) {
+      localStorage.setItem('filmsToken', value);
+    } else {
+      localStorage.removeItem('filmsToken');
+    }
+  }
+
+  private get userName(): string {
+    return localStorage.getItem('filmsUserName') || '';
+  }
+
+  private set userName(value: string) {
+    this.loggedUserSignal.set(value);
+    if (value) {
+      localStorage.setItem('filmsUserName', value);
+    } else {
+      localStorage.removeItem('filmsUserName');
+    }
+  }
 
   constructor(
     private http: HttpClient,
@@ -50,6 +77,7 @@ export class UsersService {
       .pipe(
         map((token) => {
           this.token = token;
+          this.userName = auth.name;
           this.messageService.success('Login successful');
           return true;
         }),
