@@ -2,6 +2,6 @@
   flex: 1 1 auto;
 }
 
-a.active {
+button.active {
   background: rgba(0, 0, 0, 0.2);
 }
