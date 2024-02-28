@@ -3,7 +3,11 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>Project Movies</span>
-  <a routerLink="/users" routerLinkActive="active" mat-flat-button color="basic"
+  <a
+    routerLink="/users"
+    routerLinkActive="active"
+    mat-flat-button
+    color="primary"
     ><mat-icon>person</mat-icon> Users</a
   >
   <a
@@ -14,11 +18,12 @@
     ><mat-icon>group</mat-icon> Extended users</a
   >
   <span class="spacer"></span>
+  <span>{{ userNameSignal() }}</span>
   <a
     routerLink="/login"
     routerLinkActive="active"
     mat-flat-button
-    color="accent"
+    color="primary"
     ><mat-icon>login</mat-icon> login</a
   >
 </mat-toolbar>

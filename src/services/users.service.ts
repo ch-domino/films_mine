@@ -16,7 +16,7 @@ export class UsersService {
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
 
-  loggedUserSignal = signal('');
+  loggedUserSignal = signal(this.userName);
 
   // private token = '';
   private get token(): string {
@@ -28,6 +28,18 @@ export class UsersService {
       localStorage.setItem('filmsToken', value);
     } else {
       localStorage.removeItem('filmsToken');
+    }
+  }
+
+  private get userName(): string {
+    return localStorage.getItem('filmsUserName') || '';
+  }
+
+  private set userName(value: string) {
+    if (value) {
+      localStorage.setItem('filmsUserName', value);
+    } else {
+      localStorage.removeItem('filmsUserName');
     }
   }
 
