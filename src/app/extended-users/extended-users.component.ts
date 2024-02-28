@@ -15,7 +15,15 @@ import { GroupsToStringPipe } from '../../pipes/groups-to-string.pipe';
 export class ExtendedUsersComponent implements OnInit {
   usersService = inject(UsersService);
   users: User[] = [];
-  columnsToDisplay = ['id', 'name', 'email', 'lastLogin', 'active', 'groups'];
+  columnsToDisplay = [
+    'id',
+    'name',
+    'email',
+    'lastLogin',
+    'active',
+    'groups',
+    'permissions',
+  ];
 
   ngOnInit(): void {
     this.usersService.getExtendedUsers().subscribe((users) => {
