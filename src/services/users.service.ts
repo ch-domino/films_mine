@@ -36,6 +36,7 @@ export class UsersService {
   }
 
   private set userName(value: string) {
+    this.loggedUserSignal.set(value);
     if (value) {
       localStorage.setItem('filmsUserName', value);
     } else {
@@ -76,7 +77,7 @@ export class UsersService {
       .pipe(
         map((token) => {
           this.token = token;
-          this.loggedUserSignal.set(auth.name);
+          this.userName = auth.name;
           this.messageService.success('Login successful');
           return true;
         }),
