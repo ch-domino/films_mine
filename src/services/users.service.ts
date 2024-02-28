@@ -15,7 +15,18 @@ export class UsersService {
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
-  private token = '';
+  // private token = '';
+  private get token(): string {
+    return localStorage.getItem('filmsToken') || '';
+  }
+
+  private set token(value: string) {
+    if (value) {
+      localStorage.setItem('filmsToken', value);
+    } else {
+      localStorage.removeItem('filmsToken');
+    }
+  }
 
   constructor(
     private http: HttpClient,
