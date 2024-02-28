@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { User } from '../entities/user';
 import { EMPTY, Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -15,6 +15,9 @@ export class UsersService {
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
+
+  loggedUserSignal = signal('');
+
   // private token = '';
   private get token(): string {
     return localStorage.getItem('filmsToken') || '';
@@ -61,6 +64,7 @@ export class UsersService {
       .pipe(
         map((token) => {
           this.token = token;
+          this.loggedUserSignal.set(auth.name);
           this.messageService.success('Login successful');
           return true;
         }),
