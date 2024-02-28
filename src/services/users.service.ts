@@ -4,6 +4,7 @@ import { EMPTY, Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +47,8 @@ export class UsersService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   getUsersSynchronous(): User[] {
@@ -81,7 +83,13 @@ export class UsersService {
           this.messageService.success('Login successful');
           return true;
         }),
-        catchError((err) => this.processError(err))
+        catchError((err) => {
+          if (err instanceof HttpErrorResponse && err.status == 401) {
+            this.messageService.error('Wrong name or password');
+            return of(false);
+          }
+          return this.processError(err);
+        })
       );
   }
 
@@ -92,6 +100,7 @@ export class UsersService {
       .subscribe(() => {
         this.token = '';
         this.userName = '';
+        this.router.navigateByUrl('/login');
         this.messageService.success('Logout successful');
       });
   }
@@ -100,6 +109,11 @@ export class UsersService {
     if (err instanceof HttpErrorResponse) {
       if (err.status === 0) {
         this.messageService.error('Server is not available');
+        return EMPTY;
+      }
+      if (err.status === 401) {
+        this.messageService.error('Token expired, login again');
+        this.logout();
         return EMPTY;
       }
       if (err.status >= 400 && err.status < 500) {
