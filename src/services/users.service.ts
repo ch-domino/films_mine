@@ -86,6 +86,7 @@ export class UsersService {
   }
 
   logout() {
+    this.http.get(this.url + 'logout/' + this.token);
     this.token = '';
     this.userName = '';
     this.messageService.success('Logout successful');
