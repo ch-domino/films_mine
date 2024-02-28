@@ -6,7 +6,7 @@ import { UsersService } from '../../services/users.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MaterialModule, RouterLinkActive],
+  imports: [MaterialModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
