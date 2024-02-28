@@ -85,6 +85,12 @@ export class UsersService {
       );
   }
 
+  logout() {
+    this.token = '';
+    this.userName = '';
+    this.messageService.success('Logout successful');
+  }
+
   processError(err: any) {
     if (err instanceof HttpErrorResponse) {
       if (err.status === 0) {

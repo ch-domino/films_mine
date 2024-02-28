@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -12,9 +12,11 @@ import { UsersService } from '../../services/users.service';
 })
 export class NavbarComponent {
   usersService = inject(UsersService);
+  router = inject(Router);
   userNameSignal = this.usersService.loggedUserSignal;
 
   logout() {
     this.usersService.logout();
+    this.router.navigateByUrl('/login');
   }
 }
