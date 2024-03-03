@@ -7,6 +7,9 @@ a {
 .title {
   margin: 2px;
 }
+.userName {
+  margin: 2px;
+}
 a.active {
   background: rgba(0, 0, 0, 0.2);
 }
