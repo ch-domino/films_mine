@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,10 +18,16 @@ export class RegisterComponent {
   hide = true;
 
   registerForm = new FormGroup({
-    login: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    password2: new FormControl(''),
+    login: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+    password2: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
   });
 
   submit() {
