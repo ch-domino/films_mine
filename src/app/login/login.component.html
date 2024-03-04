@@ -18,7 +18,15 @@
           #nameModel="ngModel"
         />
         <mat-hint>Insert your Username</mat-hint>
-        <mat-error>{{ printError(nameModel.errors) }}</mat-error>
+        <mat-error>
+          @if(nameModel.errors){ @if (nameModel.errors['required']) { Username
+          is required } @else if (nameModel.errors['minlength']) { Username must
+          be at least
+          {{ nameModel.errors["minlength"]["requiredLength"] }} characters long
+          } } @else {
+          {{ printError(nameModel.errors) }}
+          }
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
