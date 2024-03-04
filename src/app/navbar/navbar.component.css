@@ -1,7 +1,15 @@
 .spacer {
-  flex: 1 1 auto;
+  flex: 1.5 1.5 auto;
 }
-
+a {
+  margin: 2px;
+}
+.title {
+  margin: 2px;
+}
+.userName {
+  margin: 2px;
+}
 a.active {
   background: rgba(0, 0, 0, 0.2);
 }

@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button>
+  <a mat-icon-button>
     <mat-icon>menu</mat-icon>
-  </button>
-  <span>Project Movies</span>
+  </a>
+  <span class="title">Project Movies</span>
   <a
     routerLink="/users"
     routerLinkActive="active"
@@ -19,13 +19,13 @@
   >
   <span class="spacer"></span>
   @if(userNameSignal()){
-  <span>{{ userNameSignal() }}</span>
+  <span class="userName">{{ userNameSignal() }}</span>
   <a
     routerLinkActive="active"
     mat-flat-button
     color="primary"
     (click)="logout()"
-    ><mat-icon>logout</mat-icon> Log out</a
+    >Log Out</a
   >
   } @else {
   <a
@@ -33,7 +33,7 @@
     routerLinkActive="active"
     mat-flat-button
     color="primary"
-    ><mat-icon>login</mat-icon> Log in</a
+    >Log In</a
   >
   }
 </mat-toolbar>

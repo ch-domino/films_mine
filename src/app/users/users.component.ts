@@ -29,8 +29,8 @@ export class UsersComponent implements OnInit {
     this.usersService.getUsers().subscribe({
       next: (u) => (this.users = u),
       error: (error) => (
-        (this.errorMessage = 'Chyba komunikacie so serverom'),
-        console.error('chyba:', error)
+        (this.errorMessage = 'Error while communicating with the server.'),
+        console.error('Error:', error)
       ),
     });
   }
