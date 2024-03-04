@@ -38,6 +38,10 @@ export class RegisterComponent {
     console.log('submit');
   }
 
+  printError(err: any) {
+    return JSON.stringify(err);
+  }
+
   get login(): FormControl<string> {
     return this.registerForm.get('login') as FormControl<string>;
   }

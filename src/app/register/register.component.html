@@ -11,15 +11,16 @@
         <mat-label>Username</mat-label>
         <input matInput formControlName="login" />
         <!-- <mat-hint>Choose your username</mat-hint> -->
+        <mat-error>
+          @if(login.errors){ @if (login.errors['required']) { Username is
+          required } @else if (login.errors['minlength']) { Username must be at
+          least
+          {{ login.errors["minlength"]["requiredLength"] }} characters long } }
+          @else {
+          {{ printError(login.errors) }}
+          }
+        </mat-error>
       </mat-form-field>
-      <mat-error>
-        @if(login.errors){ @if (login.errors['required']) { Username is required
-        } @else if (login.errors['minlength']) { Username must be at least
-        {{ login.errors["minlength"]["requiredLength"] }} characters long } }
-        @else {
-        {{ printError(login.errors) }}
-        }
-      </mat-error>
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
