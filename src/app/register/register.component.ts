@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,13 @@ import { MaterialModule } from '../../modules/material.module';
 })
 export class RegisterComponent {
   hide = true;
+
+  registerForm = new FormGroup({
+    login: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
+    password2: new FormControl(''),
+  });
 
   submit() {
     console.log('submit');
