@@ -35,6 +35,7 @@
           [type]="hide ? 'password' : 'text'"
           formControlName="password"
         />
+        <!-- <mat-hint>Your password is strong</mat-hint> -->
         <mat-error>
           @if(password.errors && password.errors['weakPassword']) {
           {{ password.errors["weakPassword"] }} }

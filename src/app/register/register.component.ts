@@ -62,7 +62,8 @@ export class RegisterComponent {
         'Password score: ' +
         result.score +
         ' of 4, ' +
-        result.crackTimesDisplay.offlineSlowHashing1e4PerSecond,
+        result.crackTimesDisplay.offlineSlowHashing1e4PerSecond +
+        ' to crack',
     };
   }
 
