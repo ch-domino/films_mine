@@ -37,4 +37,8 @@ export class RegisterComponent {
   submit() {
     console.log('submit');
   }
+
+  get login(): FormControl<string> {
+    return this.registerForm.get('login') as FormControl<string>;
+  }
 }
