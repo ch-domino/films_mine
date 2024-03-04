@@ -22,18 +22,18 @@
   <span class="userName">{{ userNameSignal() }}</span>
   <a
     routerLinkActive="active"
-    mat-icon-button
-    color="secondary"
+    mat-flat-button
+    color="primary"
     (click)="logout()"
-    ><mat-icon>logout</mat-icon></a
+    >Log Out</a
   >
   } @else {
   <a
     routerLink="/login"
     routerLinkActive="active"
-    mat-icon-button
-    color="secondary"
-    ><mat-icon>login</mat-icon></a
+    mat-flat-button
+    color="primary"
+    >Log In</a
   >
   }
 </mat-toolbar>
