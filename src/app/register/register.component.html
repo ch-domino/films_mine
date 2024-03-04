@@ -35,6 +35,10 @@
           [type]="hide ? 'password' : 'text'"
           formControlName="password"
         />
+        <mat-error>
+          @if(password.errors && password.errors['weakPassword']) {
+          {{ password.errors["weakPassword"] }} }
+        </mat-error>
         <button
           mat-icon-button
           matSuffix

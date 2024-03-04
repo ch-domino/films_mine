@@ -31,7 +31,7 @@ export class RegisterComponent {
     ]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(8),
+      this.passwordValidator,
     ]),
     password2: new FormControl('', [
       Validators.required,
@@ -76,5 +76,9 @@ export class RegisterComponent {
 
   get login(): FormControl<string> {
     return this.registerForm.get('login') as FormControl<string>;
+  }
+
+  get password(): FormControl<string> {
+    return this.registerForm.get('password') as FormControl<string>;
   }
 }
