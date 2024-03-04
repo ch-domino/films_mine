@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core';
+import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
+import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +36,19 @@ export class RegisterComponent {
       Validators.minLength(8),
     ]),
   });
+
+  constructor() {
+    const options = {
+      translations: zxcvbnEnPackage.translations,
+      graphs: zxcvbnCommonPackage.adjacencyGraphs,
+      dictionary: {
+        ...zxcvbnCommonPackage.dictionary,
+        ...zxcvbnEnPackage.dictionary,
+      },
+    };
+
+    zxcvbnOptions.setOptions(options);
+  }
 
   submit() {
     console.log('submit');
