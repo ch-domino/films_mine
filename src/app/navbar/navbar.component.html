@@ -25,15 +25,22 @@
     mat-stroked-button
     color="basic"
     (click)="logout()"
-    >Log out of {{ userNameSignal() }}</a
+    ><mat-icon>logout</mat-icon>Log out of {{ userNameSignal() }}</a
   >
   } @else {
+  <a
+    routerLink="register"
+    routerLinkActive="active"
+    mat-stroked-button
+    color="accent"
+    ><mat-icon>person_add</mat-icon>Register
+  </a>
   <a
     routerLink="/login"
     routerLinkActive="active"
     mat-stroked-button
     color="basic"
-    >Log In</a
+    ><mat-icon>login</mat-icon>Log In</a
   >
   }
 </mat-toolbar>
