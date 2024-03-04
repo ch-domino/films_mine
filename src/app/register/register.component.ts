@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
