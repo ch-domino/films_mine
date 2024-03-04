@@ -21,6 +21,24 @@ import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
 })
 export class RegisterComponent {
   hide = true;
+  passwordMessage = '';
+
+  passwordValidator = (model: AbstractControl): ValidationErrors | null => {
+    const result = zxcvbn(model.value);
+    this.passwordMessage =
+      'Password score: ' +
+      result.score +
+      ' of 4, ' +
+      result.crackTimesDisplay.offlineSlowHashing1e4PerSecond +
+      ' to crack';
+
+    if (result.score > 2) {
+      return null;
+    }
+    return {
+      weakPassword: this.passwordMessage,
+    };
+  };
 
   registerForm = new FormGroup({
     login: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -50,21 +68,6 @@ export class RegisterComponent {
     };
 
     zxcvbnOptions.setOptions(options);
-  }
-
-  passwordValidator(model: AbstractControl): ValidationErrors | null {
-    const result = zxcvbn(model.value);
-    if (result.score > 2) {
-      return null;
-    }
-    return {
-      weakPassword:
-        'Password score: ' +
-        result.score +
-        ' of 4, ' +
-        result.crackTimesDisplay.offlineSlowHashing1e4PerSecond +
-        ' to crack',
-    };
   }
 
   submit() {
