@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core';
@@ -48,6 +50,20 @@ export class RegisterComponent {
     };
 
     zxcvbnOptions.setOptions(options);
+  }
+
+  passwordValidator(model: AbstractControl): ValidationErrors | null {
+    const result = zxcvbn(model.value);
+    if (result.score > 2) {
+      return null;
+    }
+    return {
+      weakPassword:
+        'Password score: ' +
+        result.score +
+        ' of 4, ' +
+        result.crackTimesDisplay.offlineSlowHashing1e4PerSecond,
+    };
   }
 
   submit() {
