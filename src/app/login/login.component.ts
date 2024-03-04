@@ -38,5 +38,9 @@ export class LoginComponent {
   setName(event: any) {
     this.auth.name = event.target.value;
   }
+
+  printError(err: any) {
+    return JSON.stringify(err);
+  }
 }
 export class CardFancyExample {}

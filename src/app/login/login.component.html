@@ -18,7 +18,7 @@
           #nameModel="ngModel"
         />
         <mat-hint>Insert your Username</mat-hint>
-        <mat-error>Username is mandatory</mat-error>
+        <mat-error>{{ printError(nameModel.errors) }}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
