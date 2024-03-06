@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
 import {
   AbstractControl,
@@ -40,22 +40,42 @@ export class RegisterComponent {
     };
   };
 
-  registerForm = new FormGroup({
-    login: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'),
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      this.passwordValidator,
-    ]),
-    password2: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-  });
+  samePasswordValidator = (model: AbstractControl): ValidationErrors | null => {
+    const password = model.get('password')?.value;
+    const password2model = model.get('password2');
+    const password2 = password2model?.value;
+    if (password === password2) {
+      password2model?.setErrors(null);
+      return null;
+    }
+    const err = {
+      passwordMismatch: 'Passwords do not match',
+    };
+    password2model?.setErrors(err);
+    return err;
+  };
+
+  registerForm = new FormGroup(
+    {
+      login: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(
+          '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'
+        ),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        this.passwordValidator,
+      ]),
+      password2: new FormControl('', [Validators.required]),
+    },
+    this.samePasswordValidator
+  );
 
   constructor() {
     const options = {
