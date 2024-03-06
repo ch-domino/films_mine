@@ -78,17 +78,21 @@ export class RegisterComponent {
 
   registerForm = new FormGroup(
     {
-      login: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(
-          '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'
-        ),
-      ]),
+      login: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(4)],
+        asyncValidators: this.userConflictsValidator('login'),
+      }),
+      email: new FormControl(
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(
+            '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'
+          ),
+        ],
+        this.userConflictsValidator('email')
+      ),
       password: new FormControl('', [
         Validators.required,
         this.passwordValidator,
