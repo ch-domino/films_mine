@@ -115,7 +115,16 @@ export class RegisterComponent {
     zxcvbnOptions.setOptions(options);
   }
 
-  submit() {}
+  submit() {
+    const user = new User(
+      this.login.value,
+      this.email.value,
+      undefined,
+      undefined,
+      this.password.value
+    );
+    this.usersService.register(user).subscribe();
+  }
 
   printError(err: any) {
     return JSON.stringify(err);
