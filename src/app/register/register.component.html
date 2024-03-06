@@ -27,6 +27,12 @@
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" />
         <!-- <mat-hint>Input your email address</mat-hint> -->
+        <mat-error>
+          @if (email.errors) { @if (email.errors['required']) { Email is
+          required } @else if (email.errors['serverConflict']){
+          {{ email.errors["serverConflict"] }}
+          } @else { Email is in a wrong format } }
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
