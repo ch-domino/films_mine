@@ -4,6 +4,8 @@ import { User } from '../../entities/user';
 import { MaterialModule } from '../../modules/material.module';
 import { DatePipe } from '@angular/common';
 import { GroupsToStringPipe } from '../../pipes/groups-to-string.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-extended-users',
@@ -14,6 +16,7 @@ import { GroupsToStringPipe } from '../../pipes/groups-to-string.pipe';
 })
 export class ExtendedUsersComponent implements OnInit {
   usersService = inject(UsersService);
+  dialog = inject(MatDialog);
   users: User[] = [];
   columnsToDisplay = [
     'id',
@@ -39,8 +42,19 @@ export class ExtendedUsersComponent implements OnInit {
   }
 
   onDelete(user: User): void {
-    this.usersService.deleteUser(user.id!).subscribe((success) => {
-      this.loadUsers();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete user',
+        question: 'Are you sure you want to delete user ' + user.name + '?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((answer) => {
+      if (answer) {
+        this.usersService.deleteUser(user.id!).subscribe((success) => {
+          this.loadUsers();
+        });
+      }
     });
   }
 }
