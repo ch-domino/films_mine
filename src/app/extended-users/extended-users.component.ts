@@ -23,11 +23,24 @@ export class ExtendedUsersComponent implements OnInit {
     'active',
     'groups',
     'permissions',
+    'actions',
   ];
 
   ngOnInit(): void {
     this.usersService.getExtendedUsers().subscribe((users) => {
       this.users = users;
+    });
+  }
+
+  loadUsers() {
+    this.usersService.getExtendedUsers().subscribe((users) => {
+      this.users = users;
+    });
+  }
+
+  onDelete(user: User): void {
+    this.usersService.deleteUser(user.id!).subscribe((success) => {
+      this.loadUsers();
     });
   }
 }

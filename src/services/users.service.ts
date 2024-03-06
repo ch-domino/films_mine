@@ -89,6 +89,18 @@ export class UsersService {
     );
   }
 
+  deleteUser(id: number): Observable<Boolean> {
+    return this.http
+      .delete<User>(this.url + 'user/' + id + '/' + this.token)
+      .pipe(
+        map(() => {
+          this.messageService.success('User deleted');
+          return true;
+        }),
+        catchError((err) => this.processError(err))
+      );
+  }
+
   login(auth: Auth): Observable<boolean> {
     return this.http
       .post(this.url + 'login', auth, { responseType: 'text' })
