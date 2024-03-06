@@ -2,6 +2,8 @@ import { Component, model } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
 import {
   AbstractControl,
+  AsyncValidator,
+  AsyncValidatorFn,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -11,6 +13,9 @@ import {
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core';
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common';
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en';
+import { UsersService } from '../../services/users.service';
+import { User } from '../../entities/user';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -55,6 +60,22 @@ export class RegisterComponent {
     return err;
   };
 
+  userConflictsValidator(field: string): AsyncValidatorFn {
+    return (model: AbstractControl): Observable<ValidationErrors | null> => {
+      const name = field === 'login' ? model.value : '';
+      const email = field === 'email' ? model.value : '';
+      const user = new User(name, email);
+      return this.usersService.userConflicts(user).pipe(
+        map((conflicts) => {
+          if (conflicts.length === 0) {
+            return null;
+          }
+          return { serverConflict: field + ' already in use' };
+        })
+      );
+    };
+  }
+
   registerForm = new FormGroup(
     {
       login: new FormControl('', [
@@ -77,7 +98,7 @@ export class RegisterComponent {
     this.samePasswordValidator
   );
 
-  constructor() {
+  constructor(private usersService: UsersService) {
     const options = {
       translations: zxcvbnEnPackage.translations,
       graphs: zxcvbnCommonPackage.adjacencyGraphs,
