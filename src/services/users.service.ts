@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { User } from '../entities/user';
-import { EMPTY, Observable, catchError, map, of, throwError } from 'rxjs';
+import { EMPTY, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
@@ -80,9 +80,13 @@ export class UsersService {
   }
 
   register(user: User): Observable<User> {
-    return this.http
-      .post<User>(this.url + 'register', user)
-      .pipe(catchError((err) => this.processError(err)));
+    return this.http.post<User>(this.url + 'register', user).pipe(
+      tap((user) => {
+        this.messageService.success('Registration successful, please log in.');
+        this.router.navigateByUrl('/login');
+      }),
+      catchError((err) => this.processError(err))
+    );
   }
 
   login(auth: Auth): Observable<boolean> {
