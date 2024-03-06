@@ -15,8 +15,9 @@
           @if(login.errors){ @if (login.errors['required']) { Username is
           required } @else if (login.errors['minlength']) { Username must be at
           least
-          {{ login.errors["minlength"]["requiredLength"] }} characters long } }
-          @else {
+          {{ login.errors["minlength"]["requiredLength"] }} characters long }
+          @else if (login.errors['serverConflict']) {
+          {{ login.errors["serverConflict"] }}} } @else {
           {{ printError(login.errors) }}
           }
         </mat-error>

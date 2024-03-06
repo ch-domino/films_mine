@@ -127,6 +127,10 @@ export class RegisterComponent {
     return this.registerForm.get('login') as FormControl<string>;
   }
 
+  get email(): FormControl<string> {
+    return this.registerForm.get('email') as FormControl<string>;
+  }
+
   get password(): FormControl<string> {
     return this.registerForm.get('password') as FormControl<string>;
   }
