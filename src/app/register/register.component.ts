@@ -115,9 +115,7 @@ export class RegisterComponent {
     zxcvbnOptions.setOptions(options);
   }
 
-  submit() {
-    console.log('submit');
-  }
+  submit() {}
 
   printError(err: any) {
     return JSON.stringify(err);

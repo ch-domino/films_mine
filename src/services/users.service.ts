@@ -79,6 +79,12 @@ export class UsersService {
       .pipe(catchError((err) => this.processError(err)));
   }
 
+  register(user: User): Observable<User> {
+    return this.http
+      .post<User>(this.url + 'register', user)
+      .pipe(catchError((err) => this.processError(err)));
+  }
+
   login(auth: Auth): Observable<boolean> {
     return this.http
       .post(this.url + 'login', auth, { responseType: 'text' })
