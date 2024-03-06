@@ -73,6 +73,12 @@ export class UsersService {
     );
   }
 
+  userConflicts(user: User): Observable<string> {
+    return this.http
+      .post<string>(this.url + 'user-conflicts', user)
+      .pipe(catchError((err) => this.processError(err)));
+  }
+
   login(auth: Auth): Observable<boolean> {
     return this.http
       .post(this.url + 'login', auth, { responseType: 'text' })
