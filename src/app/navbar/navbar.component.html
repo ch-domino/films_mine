@@ -20,13 +20,22 @@
   <span class="spacer"></span>
   @if(userNameSignal()){
   <!-- <span class="userName">{{ userNameSignal() }}</span> -->
-  <a
+  <button mat-button [matMenuTriggerFor]="menu">{{ userNameSignal() }}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item disabled>
+      <mat-icon>settings</mat-icon>Settings
+    </button>
+    <button mat-menu-item routerLinkActive="active" (click)="logout()">
+      <mat-icon>logout</mat-icon>Log out
+    </button>
+  </mat-menu>
+  <!-- <a
     routerLinkActive="active"
     mat-stroked-button
     color="basic"
     (click)="logout()"
     ><mat-icon>logout</mat-icon>Log out of {{ userNameSignal() }}</a
-  >
+  > -->
   } @else {
   <a
     routerLink="register"
