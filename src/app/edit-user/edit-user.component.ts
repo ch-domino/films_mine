@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MaterialModule } from '../../modules/material.module';
-import { map, switchMap, tap } from 'rxjs';
+import { EMPTY, map, of, switchMap, tap } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../entities/user';
 
@@ -23,7 +23,9 @@ export class EditUserComponent implements OnInit {
       .pipe(
         map((params) => Number(params.get('id'))),
         tap((id) => (this.userId = id)),
-        switchMap((id) => this.usersService.getUser(id))
+        switchMap((id) =>
+          id ? this.usersService.getUser(id) : of(new User('', ''))
+        )
       )
       .subscribe((user) => (this.user = user));
 
