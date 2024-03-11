@@ -1,15 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MaterialModule } from '../../modules/material.module';
-import { EMPTY, map, of, switchMap, tap } from 'rxjs';
+import { map, of, switchMap, tap } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../entities/user';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Group } from '../../entities/group';
 
 @Component({
   selector: 'app-edit-user',
@@ -24,6 +26,7 @@ export class EditUserComponent implements OnInit {
   userId?: number;
   user = new User('', '');
   hide = true;
+  allGroups: Group[] = [];
   editForm = new FormGroup({
     login: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
@@ -35,18 +38,42 @@ export class EditUserComponent implements OnInit {
       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'),
     ]), //, this.userConfictsValidator('email')),
     password: new FormControl(''),
+    active: new FormControl(true),
+    groups: new FormArray([]),
   });
 
   ngOnInit(): void {
-    this.route.paramMap
+    this.usersService
+      .getGroups()
       .pipe(
+        tap((groups) => {
+          this.allGroups = groups;
+          this.allGroups.forEach((group) => {
+            this.groups.push(new FormControl(false));
+          });
+        }),
+        switchMap((groups) => this.route.paramMap),
         map((params) => Number(params.get('id'))),
         tap((id) => (this.userId = id)),
         switchMap((id) =>
           id ? this.usersService.getUser(id) : of(new User('', ''))
         )
       )
-      .subscribe((user) => (this.user = user));
+      .subscribe((user) => {
+        this.user = user;
+        this.editForm.patchValue({
+          login: user.name,
+          email: user.email,
+          password: '',
+          active: user.active,
+        });
+        this.allGroups.forEach((group, i) => {
+          const inGroup = user.groups.some(
+            (userGroup) => userGroup.id === group.id
+          );
+          this.groups.at(i)?.setValue(inGroup);
+        });
+      });
 
     // this.userId = Number(this.route.snapshot.params['id']);
   }
@@ -61,5 +88,8 @@ export class EditUserComponent implements OnInit {
   }
   get password(): FormControl<string> {
     return this.editForm.get('password') as FormControl<string>;
+  }
+  get groups(): FormArray {
+    return this.editForm.get('groups') as FormArray;
   }
 }

@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
+import { Group } from '../entities/group';
 
 @Injectable({
   providedIn: 'root',
@@ -84,6 +85,15 @@ export class UsersService {
     return this.http
       .post<string>(this.url + 'user-conflicts', user)
       .pipe(catchError((err) => this.processError(err)));
+  }
+
+  getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(this.url + 'groups').pipe(
+      map((jsonGroups) =>
+        jsonGroups.map((jsonGroup) => Group.clone(jsonGroup))
+      ),
+      catchError((err) => this.processError(err))
+    );
   }
 
   register(user: User): Observable<User> {
