@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MaterialModule } from '../../modules/material.module';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { UsersService } from '../../services/users.service';
+import { User } from '../../entities/user';
 
 @Component({
   selector: 'app-edit-user',
@@ -13,13 +14,18 @@ import { UsersService } from '../../services/users.service';
 })
 export class EditUserComponent implements OnInit {
   route = inject(ActivatedRoute);
+  usersService = inject(UsersService);
   userId?: number;
+  user = new User('', '');
 
   ngOnInit(): void {
     this.route.paramMap
-      .pipe(map((params) => Number(params.get('id'))))
-      .subscribe((id) => (this.userId = id));
+      .pipe(
+        map((params) => Number(params.get('id'))),
+        switchMap((id) => this.usersService.getUser(id))
+      )
+      .subscribe((user) => (this.user = user));
 
-    this.userId = Number(this.route.snapshot.params['id']);
+    // this.userId = Number(this.route.snapshot.params['id']);
   }
 }
