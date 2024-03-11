@@ -10,9 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditUserComponent implements OnInit {
   route = inject(ActivatedRoute);
-  userId?: string;
+  userId?: number;
 
   ngOnInit(): void {
-    this.userId = this.route.snapshot.params['id'];
+    this.userId = Number(this.route.snapshot.params['id']);
   }
 }
