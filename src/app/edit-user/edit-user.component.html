@@ -2,3 +2,9 @@
   @if (userId) { Editing user with ID {{ userId }}
   } @else { Add new user }
 </h2>
+@if (userId) {
+<a routerLink="../{{ userId - 1 }}" mat-raised-button color="primary"
+  >Previous</a
+>
+<a routerLink="../{{ userId + 1 }}" mat-raised-button color="primary">Next</a>
+}
