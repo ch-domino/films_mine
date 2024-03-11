@@ -106,6 +106,17 @@ export class UsersService {
     );
   }
 
+  saveUser(user: User): Observable<User> {
+    return this.http.post<User>(this.url + 'users/' + this.token, user).pipe(
+      map((jsonUser) => User.clone(jsonUser)),
+      tap((user) =>
+        this.messageService.success('User ' + user.name + ' saved')
+      ),
+      tap((user) => this.router.navigateByUrl('/extended-users')),
+      catchError((err) => this.processError(err))
+    );
+  }
+
   deleteUser(id: number): Observable<Boolean> {
     return this.http
       .delete<User>(this.url + 'user/' + id + '/' + this.token)

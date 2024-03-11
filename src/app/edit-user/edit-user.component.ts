@@ -78,7 +78,16 @@ export class EditUserComponent implements OnInit {
     // this.userId = Number(this.route.snapshot.params['id']);
   }
 
-  submit() {}
+  submit() {
+    this.user.name = this.login.value.trim();
+    this.user.email = this.email.value;
+    this.user.password = this.password.value.trim();
+    this.user.active = !!this.editForm.get('active')!.value;
+    this.user.groups = this.allGroups.filter(
+      (group, i) => this.groups.at(i).value
+    );
+    this.usersService.saveUser(this.user).subscribe();
+  }
 
   get login(): FormControl<string> {
     return this.editForm.get('login') as FormControl<string>;
