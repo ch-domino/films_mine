@@ -16,6 +16,7 @@ import { ConfirmService } from '../../services/confirm.service';
 import { RouterLink } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-extended-users',
@@ -40,14 +41,16 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
     'actions',
   ];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
+    if (this.paginator && this.sort) {
       this.usersDataSource.paginator = this.paginator;
+      this.usersDataSource.sort = this.sort;
       this.paginator.length = this.users.length;
     }
   }
