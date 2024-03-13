@@ -29,7 +29,7 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
   usersService = inject(UsersService);
   confirmService = inject(ConfirmService);
   users: User[] = [];
-  usersDataSource = new MatTableDataSource();
+  usersDataSource = new MatTableDataSource<User>();
   columnsToDisplay = [
     'id',
     'name',
@@ -50,8 +50,33 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.paginator && this.sort) {
       this.usersDataSource.paginator = this.paginator;
-      this.usersDataSource.sort = this.sort;
       this.paginator.length = this.users.length;
+
+      this.usersDataSource.sort = this.sort;
+      const pipe = new GroupsToStringPipe();
+      this.usersDataSource.sortingDataAccessor = (
+        user: User,
+        col: string
+      ): string | number => {
+        switch (col) {
+          case 'name':
+            return user.name;
+          case 'email':
+            return user.email;
+          case 'lastLogin':
+            return user.lastLogin?.toISOString() || '';
+          case 'groups': {
+            const str = pipe.transform(user.groups);
+            return str ? ' ' + str : 'a';
+          }
+          case 'permissions': {
+            const str = pipe.transform(user.groups, 'permissions');
+            return str ? ' ' + str : 'a';
+          }
+          default:
+            return '';
+        }
+      };
     }
   }
 
