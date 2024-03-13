@@ -80,6 +80,10 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onFilter(event: any) {
+    this.usersDataSource.filter = event.target.value.trim();
+  }
+
   loadUsers() {
     this.usersService.getExtendedUsers().subscribe((users) => {
       this.users = users;
