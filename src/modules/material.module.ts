@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const modules = [
   MatButtonModule,
@@ -21,6 +22,7 @@ const modules = [
   MatDialogModule,
   MatSlideToggleModule,
   MatCheckboxModule,
+  MatPaginatorModule,
 ];
 
 @NgModule({

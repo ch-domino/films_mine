@@ -1,14 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MaterialModule } from '../../modules/material.module';
-import { map, of, switchMap, tap } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../entities/user';
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Group } from '../../entities/group';
@@ -30,13 +33,19 @@ export class EditUserComponent implements OnInit {
   editForm = new FormGroup({
     login: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
-      // asyncValidators: this.userConfictsValidator('login')
+      asyncValidators: this.userConflictsValidator('login'),
     }),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'),
-    ]), //, this.userConfictsValidator('email')),
+    email: new FormControl(
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(
+          '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]{2,}$'
+        ),
+      ],
+      this.userConflictsValidator('email')
+    ),
     password: new FormControl(''),
     active: new FormControl(true),
     groups: new FormArray([]),
@@ -53,7 +62,7 @@ export class EditUserComponent implements OnInit {
           });
         }),
         switchMap((groups) => this.route.paramMap),
-        map((params) => Number(params.get('id'))),
+        map((params) => Number(params.get('id')) || undefined),
         tap((id) => (this.userId = id)),
         switchMap((id) =>
           id ? this.usersService.getUser(id) : of(new User('', ''))
@@ -76,6 +85,22 @@ export class EditUserComponent implements OnInit {
       });
 
     // this.userId = Number(this.route.snapshot.params['id']);
+  }
+
+  userConflictsValidator(field: string): AsyncValidatorFn {
+    return (model: AbstractControl): Observable<ValidationErrors | null> => {
+      const name = field === 'login' ? model.value : '';
+      const email = field === 'email' ? model.value : '';
+      const user = new User(name, email, this.userId);
+      return this.usersService.userConflicts(user).pipe(
+        map((conflicts) => {
+          if (conflicts.length === 0) {
+            return null;
+          }
+          return { serverConflict: field + ' already in use' };
+        })
+      );
+    };
   }
 
   submit() {
