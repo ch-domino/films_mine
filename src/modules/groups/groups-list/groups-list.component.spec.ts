@@ -8,10 +8,9 @@ describe('GroupsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GroupsListComponent]
-    })
-    .compileComponents();
-    
+      imports: [GroupsListComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GroupsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
