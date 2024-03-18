@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Group } from '../../../entities/group';
 
 @Component({
   selector: 'app-group-detail',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.css',
 })
-export class GroupDetailComponent {}
+export class GroupDetailComponent {
+  group!: Group;
+}
