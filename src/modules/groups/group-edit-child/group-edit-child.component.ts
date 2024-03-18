@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
   inject,
 } from '@angular/core';
@@ -20,6 +22,7 @@ import { UsersService } from '../../../services/users.service';
 export class GroupEditChildComponent implements OnChanges {
   @Input() group: Group = new Group('');
   @Input() saveToServer: boolean = false;
+  @Output() groupChange = new EventEmitter<Group>();
   usersService = inject(UsersService);
   groupName = '';
   permissions = '';
@@ -36,7 +39,11 @@ export class GroupEditChildComponent implements OnChanges {
       .filter((p) => p.length > 0);
     const groupToSave = new Group(this.groupName, perms, this.group.id);
     if (this.saveToServer) {
-      this.usersService.saveGroup(groupToSave).subscribe((savedGroup) => {});
+      this.usersService.saveGroup(groupToSave).subscribe((savedGroup) => {
+        this.groupChange.emit(savedGroup);
+      });
+    } else {
+      this.groupChange.emit(groupToSave);
     }
   }
 }
