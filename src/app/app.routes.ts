@@ -3,7 +3,6 @@ import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ExtendedUsersComponent } from './extended-users/extended-users.component';
-import { RegisterComponent } from './register/register.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { authGuard, authMatchGuard } from '../guards/auth.guard';
 
@@ -15,7 +14,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./register/register.component').then(
+        (com) => com.RegisterComponent
+      ),
+  },
   { path: 'user/edit/:id', component: EditUserComponent },
   { path: 'user/new', component: EditUserComponent },
   {
