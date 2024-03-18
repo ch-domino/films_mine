@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { GroupEditChildComponent } from '../group-edit-child/group-edit-child.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, of, switchMap } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
 import { Group } from '../../../entities/group';
@@ -14,6 +14,7 @@ import { Group } from '../../../entities/group';
 })
 export class GroupEditComponent implements OnInit {
   usersService = inject(UsersService);
+  router = inject(Router);
   route = inject(ActivatedRoute);
   group: Group = new Group('');
 
@@ -27,5 +28,9 @@ export class GroupEditComponent implements OnInit {
         )
       )
       .subscribe((group) => (this.group = group));
+  }
+
+  groupSaved(group: Group) {
+    this.router.navigateByUrl('/groups');
   }
 }
