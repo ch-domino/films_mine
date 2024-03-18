@@ -6,6 +6,7 @@ import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Group } from '../entities/group';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root',
@@ -98,6 +99,13 @@ export class UsersService {
 
   getGroup(id: number): Observable<Group> {
     return this.http.get<Group>(this.url + 'group/' + id).pipe(
+      map((jsonGroup) => Group.clone(jsonGroup)),
+      catchError((err) => this.processError(err))
+    );
+  }
+
+  saveGroup(group: Group): Observable<Group> {
+    return this.http.post<Group>(this.url + 'groups/' + this.token, group).pipe(
       map((jsonGroup) => Group.clone(jsonGroup)),
       catchError((err) => this.processError(err))
     );
