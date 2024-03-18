@@ -3,6 +3,7 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 import { GroupsMenuComponent } from './groups-menu/groups-menu.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
+import { authGuard } from '../../guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,7 +12,11 @@ export const routes: Routes = [
     children: [
       { path: '', component: GroupsListComponent },
       { path: 'new', component: GroupEditComponent },
-      { path: 'edit/:id', component: GroupEditComponent },
+      {
+        path: 'edit/:id',
+        component: GroupEditComponent,
+        canActivate: [authGuard],
+      },
       { path: 'detail/:id', component: GroupDetailComponent },
     ],
   },
