@@ -5,6 +5,7 @@ import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { authGuard } from '../../guards/auth.guard';
 import { canDeactivateGuard } from '../../guards/can-deactivate.guard';
+import { resolveGroupGuard } from '../../guards/resolve-group.guard';
 
 export const routes: Routes = [
   {
@@ -19,7 +20,16 @@ export const routes: Routes = [
         canActivate: [authGuard],
         canDeactivate: [canDeactivateGuard],
       },
-      { path: 'detail/:id', component: GroupDetailComponent },
+      {
+        path: 'detail/:id',
+        component: GroupDetailComponent,
+        resolve: {
+          group: resolveGroupGuard,
+        },
+        data: {
+          blbost: 'hahaha',
+        },
+      },
     ],
   },
 ];
