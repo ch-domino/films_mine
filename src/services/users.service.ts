@@ -96,6 +96,13 @@ export class UsersService {
     );
   }
 
+  getGroup(id: number): Observable<Group> {
+    return this.http.get<Group>(this.url + 'group/' + id).pipe(
+      map((jsonGroup) => Group.clone(jsonGroup)),
+      catchError((err) => this.processError(err))
+    );
+  }
+
   register(user: User): Observable<User> {
     return this.http.post<User>(this.url + 'register', user).pipe(
       tap((user) => {
