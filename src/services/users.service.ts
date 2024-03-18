@@ -6,7 +6,8 @@ import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Group } from '../entities/group';
-import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+
+export const DEFAULT_REDIRECT_AFTER_LOGIN = '/extended-users';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class UsersService {
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
+  public redirectAfterLogin = DEFAULT_REDIRECT_AFTER_LOGIN;
 
   loggedUserSignal = signal(this.userName);
 
