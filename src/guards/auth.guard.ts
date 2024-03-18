@@ -3,10 +3,12 @@ import { UsersService } from '../services/users.service';
 import { inject } from '@angular/core';
 
 export const authMatchGuard: CanMatchFn = (route, segments) => {
+  console.log('Auth Match: guarding');
   return auth(route.path || '');
 };
 
 export const authGuard: CanActivateFn = (route, state) => {
+  console.log('Auth Activate: guarding');
   return auth(state.url);
 };
 
