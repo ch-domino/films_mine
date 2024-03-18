@@ -200,4 +200,8 @@ export class UsersService {
     console.error('Error', err);
     return EMPTY;
   }
+
+  isLoggedIn(): boolean {
+    return !!this.token;
+  }
 }
