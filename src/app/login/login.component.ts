@@ -30,7 +30,7 @@ export class LoginComponent {
       if (success) {
         this.router.navigateByUrl(this.usersService.redirectAfterLogin);
         this.usersService.redirectAfterLogin = DEFAULT_REDIRECT_AFTER_LOGIN;
-        console.log('success: ', success);
+        // console.log('success: ', success);
       }
     });
   }
