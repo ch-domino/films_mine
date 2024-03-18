@@ -1,14 +1,22 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { inject } from '@angular/core';
 
+export const authMatchGuard: CanMatchFn = (route, segments) => {
+  return auth(route.path || '');
+};
+
 export const authGuard: CanActivateFn = (route, state) => {
+  return auth(state.url);
+};
+
+const auth = (url: string): boolean => {
   const usersService = inject(UsersService);
   const router = inject(Router);
   if (usersService.isLoggedIn()) {
     return true;
   }
-  usersService.redirectAfterLogin = state.url;
+  usersService.redirectAfterLogin = url;
   router.navigateByUrl('/login');
   return false;
 };
