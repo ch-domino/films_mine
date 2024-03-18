@@ -8,10 +8,9 @@ describe('GroupEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GroupEditComponent]
-    })
-    .compileComponents();
-    
+      imports: [GroupEditComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GroupEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
