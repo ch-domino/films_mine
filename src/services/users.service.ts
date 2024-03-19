@@ -7,6 +7,8 @@ import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { Group } from '../entities/group';
 
+export const DEFAULT_REDIRECT_AFTER_LOGIN = '/extended-users';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +19,7 @@ export class UsersService {
     new User('Lois Service', 'lois@upjs.sk', 3),
     new User('Stewie Service', 'stewie@upjs.sk', 1),
   ];
+  public redirectAfterLogin = DEFAULT_REDIRECT_AFTER_LOGIN;
 
   loggedUserSignal = signal(this.userName);
 
@@ -92,6 +95,20 @@ export class UsersService {
       map((jsonGroups) =>
         jsonGroups.map((jsonGroup) => Group.clone(jsonGroup))
       ),
+      catchError((err) => this.processError(err))
+    );
+  }
+
+  getGroup(id: number): Observable<Group> {
+    return this.http.get<Group>(this.url + 'group/' + id).pipe(
+      map((jsonGroup) => Group.clone(jsonGroup)),
+      catchError((err) => this.processError(err))
+    );
+  }
+
+  saveGroup(group: Group): Observable<Group> {
+    return this.http.post<Group>(this.url + 'groups/' + this.token, group).pipe(
+      map((jsonGroup) => Group.clone(jsonGroup)),
       catchError((err) => this.processError(err))
     );
   }
@@ -184,5 +201,9 @@ export class UsersService {
     }
     console.error('Error', err);
     return EMPTY;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.token;
   }
 }

@@ -8,10 +8,9 @@ describe('GroupsMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GroupsMenuComponent]
-    })
-    .compileComponents();
-    
+      imports: [GroupsMenuComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GroupsMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

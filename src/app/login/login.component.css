@@ -3,9 +3,11 @@
   margin: 100px auto;
   color: #fff;
 }
+
 .login_card mat-form-field {
   display: block;
 }
+
 .login_card mat-card-actions button,
 mat-card-header {
   margin: 0 auto;
