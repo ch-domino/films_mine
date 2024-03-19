@@ -1,6 +1,7 @@
-import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
-import { UsersService } from '../services/users.service';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { UsersService } from '../services/users.service';
+import { CanMatchFn } from '@angular/router';
 
 export const authMatchGuard: CanMatchFn = (route, segments) => {
   console.log('Auth Match: guarding');
