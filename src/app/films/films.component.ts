@@ -38,7 +38,7 @@ export class FilmsComponent implements AfterViewInit {
   orderByS = signal<string | undefined>(undefined);
   descendingS = signal<boolean | undefined>(undefined);
   indexFromS = signal<number | undefined>(undefined);
-  indexToS = signal<number | undefined>(undefined);
+  indexToS = signal<number | undefined>(5);
   searchS = signal<string | undefined>(undefined);
 
   quesryS = computed(
