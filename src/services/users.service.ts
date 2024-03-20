@@ -184,14 +184,14 @@ export class UsersService {
         this.messageService.error('Server is not available');
         return EMPTY;
       }
-      if (err.status === 401) {
+      const message =
+        err.error.errorMessage || JSON.parse(err.error).errorMessage;
+      if (err.status === 401 || message === 'unknown token') {
         this.messageService.error('Token expired, login again');
         this.logout();
         return EMPTY;
       }
       if (err.status >= 400 && err.status < 500) {
-        const message =
-          err.error.errorMessage || JSON.parse(err.error).errorMessage;
         this.messageService.error(message);
         return EMPTY;
       }
