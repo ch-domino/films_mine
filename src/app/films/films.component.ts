@@ -84,7 +84,6 @@ export class FilmsComponent implements AfterViewInit {
         this.descendingS.set(undefined);
         return;
       }
-      this.orderByS.set(sortEvent.active);
       this.descendingS.set(sortEvent.direction === 'desc');
       let column = sortEvent.active;
       if (column === 'afi1998') {
@@ -93,6 +92,7 @@ export class FilmsComponent implements AfterViewInit {
       if (column === 'afi2007') {
         column = 'poradieVRebricku.AFI 2007';
       }
+      this.orderByS.set(column);
       this.paginatorS().firstPage();
     });
   }
