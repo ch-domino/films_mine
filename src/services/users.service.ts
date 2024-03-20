@@ -1,11 +1,11 @@
-import { Injectable, signal } from '@angular/core';
-import { User } from '../entities/user';
-import { EMPTY, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Auth } from '../entities/auth';
-import { MessageService } from './message.service';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { EMPTY, Observable, catchError, map, of, tap } from 'rxjs';
+import { Auth } from '../entities/auth';
 import { Group } from '../entities/group';
+import { User } from '../entities/user';
+import { MessageService } from './message.service';
 
 export const DEFAULT_REDIRECT_AFTER_LOGIN = '/extended-users';
 
