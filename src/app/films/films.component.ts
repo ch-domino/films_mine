@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, inject, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { Film } from '../../entities/film';
 import { FilmsService } from '../../services/films.service';
 import { UsersService } from '../../services/users.service';
@@ -14,8 +20,14 @@ import { MaterialModule } from '../../modules/material.module';
 export class FilmsComponent implements AfterViewInit {
   filmsService = inject(FilmsService);
   usersService = inject(UsersService);
+  userNameS = this.usersService.loggedUserSignal;
+
   films: Film[] = [];
-  columnsToDisplay = ['id', 'nazov', 'rok'];
+  columnsToDisplay = computed(() =>
+    this.userNameS()
+      ? ['id', 'nazov', 'rok', 'slovenskyNazov', 'afi1998', 'afi2007']
+      : ['id', 'nazov', 'rok']
+  );
 
   ngAfterViewInit(): void {
     this.filmsService.getFilms().subscribe((filmsResponse) => {
