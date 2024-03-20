@@ -77,11 +77,30 @@ export class FilmsComponent implements AfterViewInit {
         )
       );
     });
+    this.sortS().sortChange.subscribe((sortEvent) => {
+      console.log('sortEvent', sortEvent);
+      if (sortEvent.direction === '') {
+        this.orderByS.set(undefined);
+        this.descendingS.set(undefined);
+        return;
+      }
+      this.orderByS.set(sortEvent.active);
+      this.descendingS.set(sortEvent.direction === 'desc');
+      let column = sortEvent.active;
+      if (column === 'afi1998') {
+        column = 'poradieVRebricku.AFI 1998';
+      }
+      if (column === 'afi2007') {
+        column = 'poradieVRebricku.AFI 2007';
+      }
+      this.paginatorS().firstPage();
+    });
   }
 
   onFilter(event: any) {
     const filter = (event.target.value as string).trim().toLowerCase();
     this.searchS.set(filter);
+    this.paginatorS().firstPage();
   }
 }
 
