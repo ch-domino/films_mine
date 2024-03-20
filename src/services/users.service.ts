@@ -24,7 +24,7 @@ export class UsersService {
   loggedUserSignal = signal(this.userName);
 
   // private token = '';
-  private get token(): string {
+  get token(): string {
     return localStorage.getItem('filmsToken') || '';
   }
 
