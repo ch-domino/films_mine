@@ -18,7 +18,9 @@
   <span class="spacer"></span>
   @if(userNameSignal()){
   <!-- <span class="userName">{{ userNameSignal() }}</span> -->
-  <button mat-button [matMenuTriggerFor]="menu">{{ userNameSignal() }}</button>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>expand_more</mat-icon>
+    {{ userNameSignal() }}</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLinkActive="active" (click)="logout()">
       <mat-icon>logout</mat-icon>Log out
