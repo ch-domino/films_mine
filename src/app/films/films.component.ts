@@ -33,7 +33,6 @@ export class FilmsComponent implements AfterViewInit {
   );
   paginatorS = viewChild.required<MatPaginator>(MatPaginator);
   sortS = viewChild.required<MatSort>(MatSort);
-  fiterS = signal('');
 
   orderByS = signal<string | undefined>(undefined);
   descendingS = signal<boolean | undefined>(undefined);
@@ -82,7 +81,7 @@ export class FilmsComponent implements AfterViewInit {
 
   onFilter(event: any) {
     const filter = (event.target.value as string).trim().toLowerCase();
-    this.fiterS.set(filter);
+    this.searchS.set(filter);
   }
 }
 
