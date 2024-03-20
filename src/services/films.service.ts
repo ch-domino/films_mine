@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Film } from '../entities/film';
 import { UsersService } from './users.service';
 import { environement } from '../app/environments/environment.development';
@@ -42,12 +42,7 @@ export class FilmsService {
     if (orderBy || descending || indexFrom || indexTo || search) {
       options = {
         ...(options || {}),
-        params: new HttpParams()
-          .set('orderBy', orderBy || '')
-          .set('descending', descending ? 'true' : 'false')
-          .set('indexFrom', indexFrom?.toString() || '')
-          .set('indexTo', indexTo?.toString() || '')
-          .set('search', search || ''),
+        params: new HttpParams(),
       };
     }
     if (options && options.params) {
@@ -67,6 +62,8 @@ export class FilmsService {
         options.params.append('search', search);
       }
     }
-    return this.http.get<FilmsResponse>(this.url + 'films', options);
+    return this.http
+      .get<FilmsResponse>(this.url + 'films', options)
+      .pipe(catchError((err) => this.usersService.processError(err)));
   }
 }
