@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { environement } from '../app/environments/environment.development';
 import { Film } from '../entities/film';
 import { UsersService } from './users.service';
-import { environement } from '../app/environments/environment.development';
 
 export interface FilmsResponse {
   items: Film[];
@@ -47,19 +47,19 @@ export class FilmsService {
     }
     if (options && options.params) {
       if (orderBy) {
-        options.params.append('orderBy', orderBy);
+        options.params = options.params.set('orderBy', orderBy);
       }
       if (descending) {
-        options.params.append('descending', descending);
+        options.params = options.params.set('descending', descending);
       }
       if (indexFrom) {
-        options.params.append('indexFrom', indexFrom);
+        options.params = options.params.set('indexFrom', indexFrom);
       }
       if (indexTo) {
-        options.params.append('indexTo', indexTo);
+        options.params = options.params.set('indexTo', indexTo);
       }
       if (search) {
-        options.params.append('search', search);
+        options.params = options.params.set('search', search);
       }
     }
     return this.http
