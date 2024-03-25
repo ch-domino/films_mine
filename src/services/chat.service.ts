@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { Client, over } from 'stompjs';
+import { Client, Subscription, over } from 'stompjs';
 import { environement } from '../app/environments/environment.development';
 import { MessageService } from './message.service';
 
@@ -11,6 +11,8 @@ export class ChatService {
   private url = environement.webSocketUrl;
   private socket?: WebSocket;
   private stomp?: Client;
+  private chatUserName = '';
+  private msgSubscription?: Subscription;
 
   constructor(private msgService: MessageService) {}
 
@@ -25,11 +27,50 @@ export class ChatService {
           subscriber.next(true);
         },
         (error) => {
-          this.msgService.error('Cannot connect to chat server');
+          this.msgService.error('Server connection error');
           console.error('STOMP error', error);
           subscriber.next(false);
         }
       );
     });
   }
+
+  sendName(name: string) {
+    // this.stomp?.send('/app/hello', {}, `{'name': '${name}'}`);
+    this.stomp?.send('/app/hello', {}, JSON.stringify(name));
+    this.chatUserName = name;
+  }
+
+  sendMessage(message: string) {
+    this.stomp?.send(
+      '/app/message',
+      {},
+      JSON.stringify({ name: this.chatUserName, message })
+    );
+  }
+
+  listenToMessages(): Observable<ChatMessage> {
+    return new Observable((subscriber) => {
+      this.msgSubscription = this.stomp?.subscribe('/topic/messages', (msg) => {
+        subscriber.next(JSON.parse(msg.body) as ChatMessage);
+      });
+    });
+  }
+
+  listenToGreetings(): Observable<ChatMessage> {
+    return new Observable((subscriber) => {
+      this.stomp?.subscribe('/topic/greetings', (msg) => {
+        let jsonObj = JSON.parse(msg.body) as { content: string };
+        subscriber.next(new ChatMessage('Server', jsonObj.content));
+      });
+    });
+  }
+
+  disconnect() {
+    this.msgSubscription?.unsubscribe();
+    this.stomp?.disconnect(() => {});
+  }
+}
+export class ChatMessage {
+  constructor(public name: string, public message: string) {}
 }
