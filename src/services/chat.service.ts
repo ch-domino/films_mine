@@ -53,12 +53,15 @@ export class ChatService {
 
   listenToMessages(): Observable<ChatMessage> {
     return new Observable((subscriber) => {
-      this.msgSubscription = this.stomp?.subscribe('/topic/messages', (msg) => {
-        subscriber.next(JSON.parse(msg.body) as ChatMessage);
-      });
+      const msgSubscription = this.stomp?.subscribe(
+        '/topic/messages',
+        (msg) => {
+          subscriber.next(JSON.parse(msg.body) as ChatMessage);
+        }
+      );
       return {
         unsubscribe: () => {
-          this.msgSubscription?.unsubscribe();
+          msgSubscription?.unsubscribe();
         },
       };
     });
@@ -66,13 +69,13 @@ export class ChatService {
 
   listenToGreetings(): Observable<ChatMessage> {
     return new Observable((subscriber) => {
-      this.stomp?.subscribe('/topic/greetings', (msg) => {
+      const greetSubsc = this.stomp?.subscribe('/topic/greetings', (msg) => {
         let jsonObj = JSON.parse(msg.body) as { content: string };
         subscriber.next(new ChatMessage('Server', jsonObj.content));
       });
       return {
         unsubscribe: () => {
-          this.msgSubscription?.unsubscribe();
+          greetSubsc?.unsubscribe();
         },
       };
     });
