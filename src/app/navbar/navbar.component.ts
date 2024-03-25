@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MaterialModule } from '../../modules/material.module';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { UsersService } from '../../services/users.service';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { MaterialModule } from '../../modules/material.module';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-navbar',
