@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { UsersComponent } from './users/users.component';
+import { authGuard, authMatchGuard } from '../guards/auth.guard';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { ExtendedUsersComponent } from './extended-users/extended-users.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ExtendedUsersComponent } from './extended-users/extended-users.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
-import { authGuard, authMatchGuard } from '../guards/auth.guard';
+import { UsersComponent } from './users/users.component';
 
 export const routes: Routes = [
   { path: 'users', component: UsersComponent },
@@ -20,6 +20,11 @@ export const routes: Routes = [
       import('./register/register.component').then(
         (com) => com.RegisterComponent
       ),
+  },
+  {
+    path: 'chat',
+    loadComponent: () =>
+      import('./chat/chat.component').then((com) => com.ChatComponent),
   },
   { path: 'user/edit/:id', component: EditUserComponent },
   { path: 'user/new', component: EditUserComponent },
