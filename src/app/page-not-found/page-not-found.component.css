@@ -1,0 +1,32 @@
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+div.pgNotFound {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+div.pgNotFound-Title {
+    font-size: 7em;
+    font-weight: bold;
+}
+
+div.pgNotFound-Subtitle {
+    font-size: 2em;
+    opacity: 70%;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
