@@ -56,6 +56,11 @@ export class ChatService {
       this.msgSubscription = this.stomp?.subscribe('/topic/messages', (msg) => {
         subscriber.next(JSON.parse(msg.body) as ChatMessage);
       });
+      return {
+        unsubscribe: () => {
+          this.msgSubscription?.unsubscribe();
+        },
+      };
     });
   }
 
@@ -65,6 +70,11 @@ export class ChatService {
         let jsonObj = JSON.parse(msg.body) as { content: string };
         subscriber.next(new ChatMessage('Server', jsonObj.content));
       });
+      return {
+        unsubscribe: () => {
+          this.msgSubscription?.unsubscribe();
+        },
+      };
     });
   }
 
