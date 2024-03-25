@@ -82,8 +82,12 @@ export class ChatService {
   }
 
   disconnect() {
-    this.msgSubscription?.unsubscribe();
     this.stomp?.disconnect(() => {});
+    this.msgService.success('Disconnected from chat');
+  }
+
+  isLoggedIn(): boolean {
+    return this.stomp?.connected || false;
   }
 }
 export class ChatMessage {
