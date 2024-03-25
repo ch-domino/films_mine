@@ -62,4 +62,8 @@ export class ChatComponent {
   ngOnDestroy() {
     this.disconnect();
   }
+
+  isLoggedIn() {
+    return this.chatService.isLoggedIn();
+  }
 }
