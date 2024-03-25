@@ -25,11 +25,13 @@ export class ChatService {
         (frame) => {
           this.msgService.success('Connected to chat server');
           subscriber.next(true);
+          subscriber.complete();
         },
         (error) => {
           this.msgService.error('Server connection error');
           console.error('STOMP error', error);
           subscriber.next(false);
+          subscriber.complete();
         }
       );
     });
