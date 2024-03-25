@@ -1,1 +1,9 @@
-<p>chat works!</p>
+<mat-form-field>
+    <mat-label>Chat name</mat-label>
+    <input matInput [(ngModel)]="name" name="name" required #nameModel="ngModel" />
+</mat-form-field>
+
+<button mat-raised-button type="button" [disabled]="nameModel.invalid" color="accent"
+    (click)="connect()">Connect</button>
+<button mat-raised-button type="button" [disabled]="nameModel.invalid" color="warn"
+    (click)="disconnect()">Disconnect</button>
