@@ -1,17 +1,18 @@
 <mat-form-field>
     <mat-label>Chat name</mat-label>
-    <input matInput [(ngModel)]="name" name="name" required #nameModel="ngModel" />
+    <input matInput [(ngModel)]="name" name="name" required #nameModel="ngModel" [disabled]="isLoggedIn()" />
 </mat-form-field>
 
-<button mat-raised-button type="button" [disabled]="nameModel.invalid" color="accent"
+<button mat-raised-button type="button" [disabled]="nameModel.invalid || isLoggedIn()" color="accent"
     (click)="connect()">Connect</button>
-<button mat-raised-button type="button" [disabled]="nameModel.invalid" color="warn"
+<button mat-raised-button type="button" [disabled]="!isLoggedIn()" color="warn"
     (click)="disconnect()">Disconnect</button>
 
+@if (isLoggedIn()) {
 <div>
     <mat-form-field>
         <mat-label>Your message</mat-label>
-        <input matInput [(ngModel)]="msgToSend" name="msg" #msgModel="ngModel">
+        <input matInput [(ngModel)]="msgToSend" name="msg" #msgModel="ngModel" autofocus>
     </mat-form-field>
     <button mat-button type="button" [disabled]="msgModel.model.lenght == 0" color="primary"
         (click)="sendMessage()"><mat-icon>send</mat-icon>Send
@@ -26,3 +27,4 @@
         }
     </ul>
 </div>
+}
