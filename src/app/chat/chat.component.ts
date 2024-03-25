@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { MaterialModule } from '../../modules/material.module';
 import { ChatMessage, ChatService } from '../../services/chat.service';
 
@@ -16,6 +16,8 @@ export class ChatComponent {
   chatService = inject(ChatService);
   messages: ChatMessage[] = [];
   msgToSend = '';
+  msgSubscription?: Subscription;
+  greetingSubscription?: Subscription;
 
   connect() {
     this.chatService
@@ -34,12 +36,16 @@ export class ChatComponent {
   }
 
   listenToEndpoints() {
-    this.chatService.listenToMessages().subscribe((message) => {
-      this.messages = [...this.messages, message];
-    });
-    this.chatService.listenToGreetings().subscribe((message) => {
-      this.messages = [...this.messages, message];
-    });
+    this.msgSubscription = this.chatService
+      .listenToMessages()
+      .subscribe((message) => {
+        this.messages = [...this.messages, message];
+      });
+    this.greetingSubscription = this.chatService
+      .listenToGreetings()
+      .subscribe((message) => {
+        this.messages = [...this.messages, message];
+      });
   }
 
   sendMessage() {
@@ -47,6 +53,8 @@ export class ChatComponent {
   }
 
   disconnect() {
+    this.msgSubscription?.unsubscribe();
+    this.greetingSubscription?.unsubscribe();
     console.log('Disconnecting...');
     this.chatService.disconnect();
   }
